@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -O2 -std=c23 -Iinclude -fPIC -lcrypto
-LIB_NAME = libcask
+LIB_NAME = libundr
 STATIC_LIB = $(LIB_NAME).a
 SHARED_LIB = $(LIB_NAME).so
 SRC_DIR = src
 OBJ_DIR = build
-INC_DIR = include/cask
+INC_DIR = include/undr
 
 TEST_BIN = build/test_runner
 
@@ -28,14 +28,14 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | build
 
 .PHONY: test
 test: $(SHARED_LIB)
-	$(CC) $(CFLAGS) tests/test.c -o tests/runner -L. -lcask
+	$(CC) $(CFLAGS) tests/test.c -o tests/runner -L. -lundr
 	@echo "Launching Test Runner..."
 	@LD_LIBRARY_PATH=. ./tests/runner
 	@rm ./tests/runner
 
 install: all
-	install -d /usr/local/include/cask
-	install -m 644 $(INC_DIR)/*.h /usr/local/include/cask
+	install -d /usr/local/include/undr
+	install -m 644 $(INC_DIR)/*.h /usr/local/include/undr
 	install -m 644 $(STATIC_LIB) /usr/local/lib
 	install -m 755 $(SHARED_LIB) /usr/local/lib
 	ldconfig

@@ -1,9 +1,9 @@
-# cask
+# undr
 *Personal C library with multiple utilities*
 
 ## Caveats
 - This library has been developed on and for Linux following open source philosophy.
-- Dependencies: ´openssl´
+- Dependencies: `openssl`
 
 ## Utilities
 - Format and prettify JSON, XML and HTML strings
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <cask/format.h>
+#include <undr/format.h>
 
 int main() {
   const char* json_input = "{\"a\":1,\"b\":[1,2]}";
