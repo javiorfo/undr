@@ -1,0 +1,7 @@
+CompileFlags:
+  Add: [-std=c23, -Wall]
+
+InlayHints:
+  Designators: Yes
+  Enabled: Yes
+  ParameterNames: Yes
