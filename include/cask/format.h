@@ -1,5 +1,6 @@
 #ifndef CASK_FORMAT_H
 #define CASK_FORMAT_H
+
 #include <stdlib.h>
 
 // Format XML (or HTML) 

@@ -1,4 +1,6 @@
+#include "cask/arena.h"
 #include "cask/format.h"
+#include "cask/jwt.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,22 +45,68 @@ int test_xml_basic() {
     return 0;
 }
 
+int test_arena() {
+    Arena *arena = arena_init(1024);
+
+    int *numbers = arena_alloc(arena, 5 * sizeof(int));
+    for (int i = 0; i < 5; i++)
+        numbers[i] = i * 10;
+
+    char *msg = arena_alloc(arena, 20);
+    strcpy(msg, "Hello Arena!");
+
+    ASSERT_STR("Hello Arena!", msg, "Arena allocation");
+
+    arena_free(arena);
+
+    return 0;
+}
+
+int test_jwt() {
+    Arena *arena = arena_init(4096);
+
+    const char *raw_jwt =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
+        "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MD"
+        "IyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+    Jwt token = decode_jwt(arena, raw_jwt);
+
+    if (token.header && token.payload) {
+        ASSERT_STR("{\"alg\":\"HS256\",\"typ\":\"JWT\"}", token.header,
+                   "JWT Header");
+        ASSERT_STR(
+            "{\"sub\":\"1234567890\",\"name\":\"John Doe\",\"iat\":1516239022}",
+            token.payload, "JWT Payload");
+    }
+
+    arena_free(arena);
+
+    return 0;
+}
+
 int main() {
     int failed = 0;
 
-    printf("Running Format Tests...\n---\n");
+    printf("Running Tests...\n---\n");
+
+    printf("Starting Format JSON Tests...\n");
     failed += test_json_basic();
 
-    if (failed == 0) {
-        printf("---\nALL TESTS PASSED!\n");
-    } else {
-        printf("---\nSOME TESTS FAILED: %d\n", failed);
-    }
-
-    printf("Starting Cask Library Tests...\n");
     printf("----------------------------------\n");
+    printf("Starting Format XML Tests...\n");
 
     failed += test_xml_basic();
+
+    printf("----------------------------------\n");
+    printf("Starting Arena Tests...\n");
+
+    failed += test_arena();
+
+    printf("----------------------------------\n");
+    printf("Starting JWT Tests...\n");
+
+    failed += test_jwt();
 
     if (failed == 0) {
         printf("----------------------------------\n");
@@ -67,6 +115,8 @@ int main() {
         printf("----------------------------------\n");
         printf("\033[0;31mResult: %d TEST(S) FAILED\033[0m\n", failed);
     }
+
+    printf("----------------------------------\n");
 
     return failed;
 }

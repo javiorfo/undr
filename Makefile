@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -O2 -std=c23 -Iinclude -fPIC
+CFLAGS = -Wall -O2 -std=c23 -Iinclude -fPIC -lcrypto
 LIB_NAME = libcask
 STATIC_LIB = $(LIB_NAME).a
 SHARED_LIB = $(LIB_NAME).so

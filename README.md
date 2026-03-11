@@ -3,10 +3,12 @@
 
 ## Caveats
 - This library has been developed on and for Linux following open source philosophy.
-- Available in AUR repositories (Arch Linux)
+- Dependencies: ´openssl´
 
 ## Utilities
 - Format and prettify JSON, XML and HTML strings
+- Arena allocator
+- JWT decoder
 
 ## Usage
 #### Formatting
