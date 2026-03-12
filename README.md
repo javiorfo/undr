@@ -1,5 +1,5 @@
 # undr
-*Personal C library with multiple utilities*
+*Personal C library with multiple utilities. The name undr provides from a short story by Jorge Luis Borges*
 
 ## Caveats
 - This library has been developed on and for Linux following open source philosophy.

@@ -36,21 +36,3 @@ void arena_free(Arena *a) {
     free(a);
     a = NULL;
 }
-
-int main() {
-    Arena *arena = arena_init(1024);
-
-    int *numbers = arena_alloc(arena, 5 * sizeof(int));
-    for (int i = 0; i < 5; i++)
-        numbers[i] = i * 10;
-
-    char *msg = arena_alloc(arena, 20);
-    strcpy(msg, "Hello Arena!");
-
-    printf("String: %s\n", msg);
-    printf("Numbers: %d, %d\n", numbers[0], numbers[1]);
-
-    arena_free(arena);
-
-    return 0;
-}
